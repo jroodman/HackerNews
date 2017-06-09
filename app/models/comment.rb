@@ -6,6 +6,8 @@ class Comment < ApplicationRecord
   has_many :votes, as: :votable
   has_many :children, class_name: :Comment, foreign_key: :parent_comment_id
 
+  validates :text, :user_id, :link_id, :vote_count, presence: true
+
   def to_s
     text
   end
