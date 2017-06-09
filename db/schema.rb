@@ -56,8 +56,7 @@ ActiveRecord::Schema.define(version: 20170609140748) do
     t.string "votable_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["votable_id"], name: "index_votes_on_votable_id"
-    t.index ["votable_type"], name: "index_votes_on_votable_type"
+    t.index ["votable_id", "votable_type", "user_id"], name: "index_votes_on_votable_id_and_votable_type_and_user_id", unique: true
   end
 
   add_foreign_key "comments", "links"
