@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Vote, type: :model do
+
+  it { should belong_to(:votable) }
+
   describe "#to_s" do
     it "returns the vote's type and id" do
       user = User.create(
