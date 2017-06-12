@@ -8,6 +8,8 @@ RSpec.describe Vote, type: :model do
   it { should validate_presence_of :votable_type }
   it { should validate_presence_of :votable_id }
 
+  it { should validate_uniqueness_of(:user_id).scoped_to(:votable_id).scoped_to(:votable_type) }
+
   describe "#to_s" do
     it "returns the vote's type and id" do
       user = User.create(
