@@ -4,6 +4,10 @@ RSpec.describe Vote, type: :model do
 
   it { should belong_to(:votable) }
 
+  it { should validate_presence_of :user_id }
+  it { should validate_presence_of :votable_type }
+  it { should validate_presence_of :votable_id }
+
   describe "#to_s" do
     it "returns the vote's type and id" do
       user = User.create(
