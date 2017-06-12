@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Comment, type: :model do
 
   it { should belong_to(:user) }
+  it { should belong_to(:link) }
   it { should belong_to(:parent).class_name(:Comment).with_foreign_key(:parent_comment_id) }
   it { should have_many(:children).class_name(:Comment).with_foreign_key(:parent_comment_id) }
 

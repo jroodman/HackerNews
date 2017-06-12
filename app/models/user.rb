@@ -13,7 +13,7 @@ class User < ApplicationRecord
     validate :username_contains_2_numbers
 
     def username_contains_2_numbers
-      if username.count("0-9") < 2
+      if username.to_s.count("0-9") < 2
         errors.add(:username, "must contain 2 numbers")
       end
     end

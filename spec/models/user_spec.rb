@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
 
-  subject { User.create(username: "username", email: "email", password: "password" ) }
+  subject { User.create(username: "username123", email: "email@test.com", password: "password123" ) }
 
   it { should have_many(:links) }
   it { should have_many(:comments) }
@@ -18,10 +18,10 @@ RSpec.describe User, type: :model do
 
   it { should allow_value('email@test.com').for(:email) }
   it { should allow_value('username12').for(:username) }
-  it { should not_allow_value('email').for(:email) }
-  it { should not_allow_value('email@test').for(:email) }
-  it { should not_allow_value('username').for(:username) }
-  it { should not_allow_value('username space').for(:username) }
+  it { should_not allow_value('email').for(:email) }
+  it { should_not allow_value('email@test').for(:email) }
+  it { should_not allow_value('username').for(:username) }
+  it { should_not allow_value('username space').for(:username) }
 
 
   describe "#to_s" do
