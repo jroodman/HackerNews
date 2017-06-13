@@ -17,10 +17,12 @@ RSpec.describe User, type: :model do
   it { should validate_length_of(:password).is_at_least(8).is_at_most(256) }
 
   it { should allow_value('email@test.com').for(:email) }
-  it { should allow_value('username12').for(:username) }
+  it { should allow_value('username').for(:username) }
+  it { should allow_value('password12').for(:password) }
   it { should_not allow_value('email').for(:email) }
   it { should_not allow_value('email@test').for(:email) }
-  it { should_not allow_value('username').for(:username) }
+  it { should_not allow_value('password').for(:password) }
+  it { should_not allow_value('password1').for(:password) }
   it { should_not allow_value('username space').for(:username) }
 
 

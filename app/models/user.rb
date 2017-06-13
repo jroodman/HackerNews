@@ -10,11 +10,11 @@ class User < ApplicationRecord
     validates :password, length: { in: 8..256 }
     validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, message: "has improper format"}
     validates :username, format: { without: /\s/, message: "must have no whitespace" }
-    validate :username_contains_2_numbers
+    validate :password_contains_2_numbers
 
-    def username_contains_2_numbers
-      if username.to_s.count("0-9") < 2
-        errors.add(:username, "must contain 2 numbers")
+    def password_contains_2_numbers
+      if password.to_s.count("0-9") < 2
+        errors.add(:password, "must contain 2 numbers")
       end
     end
 
