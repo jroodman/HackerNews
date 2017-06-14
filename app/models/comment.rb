@@ -1,6 +1,7 @@
 class Comment < ApplicationRecord
 
   belongs_to :user
+  belongs_to :link
   belongs_to :parent, class_name: :Comment, foreign_key: :parent_comment_id
 
   has_many :votes, as: :votable
