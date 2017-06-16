@@ -5,6 +5,7 @@ class UsersController < ApplicationController
 
     if @user.save
       redirect_to root_path, notice: 'User successfully created.'
+      session[:user_id] = @user.id
     else
       render :new
     end
@@ -14,6 +15,29 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
+  def update
+    # @user = User.find(session[:user_id])
+    @user = User.find(params[:id])
+
+    parameters = remove_empty user_params
+
+    if parameters.empty?
+      @form_empty = "All form fields cannot be empty."
+      render :edit
+      return
+    end
+
+    if @user.update_attributes(parameters)
+      redirect_to root_path, notice: 'User successfully edited.'
+    else
+      render :edit
+    end
+  end
+
+  def edit
+    @user = User.find(params[:id])
+  end
+
   def user_params
     params.require(:user).permit(
       :username,
@@ -21,6 +45,12 @@ class UsersController < ApplicationController
       :password,
       :password_confirmation
     )
+  end
+
+  def remove_empty(parameters)
+    parameters.to_h.reduce(Hash.new) do |hash, (k, v)|
+      v.present? ? hash.merge(k => v) : hash
+    end
   end
 
 end

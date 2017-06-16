@@ -1,0 +1,21 @@
+<h1>Edit User</h1>
+
+
+<ul>
+  <% if @form_empty.present? %>
+    <li><%=@form_empty%></li>
+  <% end %>
+  <% if @user.errors.any? %>
+    <% @user.errors.uniq.each do |error_field| %>
+      <li> <%= "#{ error_field.to_s.humanize } " + @user.errors[error_field].join('; ') %></li>
+    <% end %>
+  <% end %>
+</ul>
+
+<%= form_for @user, html: {class: "edit_user_form"} do |f| %>
+  <p> New <%= f.label(:username) %>: <%= f.text_field :username %> </p>
+  <p> New <%= f.label(:email) %>: <%= f.email_field :email %> </p>
+  <p> New <%= f.label(:password) %>: <%= f.password_field :password %> </p>
+  <p> New <%= f.label(:password_confirmation) %>: <%= f.password_field :password_confirmation %> </p>
+  <%= f.submit "Submit" %>
+<% end %>
