@@ -16,8 +16,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    # @user = User.find(session[:user_id])
-    @user = User.find(params[:id])
+    @user = User.find(session[:user_id])
 
     parameters = remove_empty user_params
 

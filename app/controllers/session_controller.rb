@@ -2,9 +2,10 @@ class SessionController < ApplicationController
 
   def create
     parameters = session_params
-    @user = User.find_by(username: parameters[:username])
 
-    if @user.authenticate(parameters[:password])
+    @user = User.find_by(username: parameters[:username]).try(:authenticate, parameters[:password])
+
+    if @user.present?
       session[:user_id] = @user.id
       redirect_to root_path, notice: 'Successful login.'
     else

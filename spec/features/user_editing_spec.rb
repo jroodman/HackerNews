@@ -11,6 +11,10 @@ RSpec.describe "a client attempting to edit their acccount", type: :feature do
       )
   end
 
+  before do
+    login_user 'username123', 'password123'
+  end
+
   context "with all fields empty" do
 
     it "fails to have their edits persisted" do
