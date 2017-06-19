@@ -4,10 +4,10 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      redirect_to root_path, notice: 'User successfully created.'
       session[:user_id] = @user.id
+      redirect_to root_path, notice: 'User successfully created.'
     else
-      render :new
+      render :new, notice: 'Error: Unable to create user account'
     end
   end
 
