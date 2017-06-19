@@ -13,3 +13,53 @@
  *= require_tree .
  *= require_self
  */
+
+.page-header {
+  background-color: orange;
+  position: relative;
+  margin-top: -100px;
+}
+
+.page-title {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-left: 1rem;
+  margin-right: .7rem;
+}
+
+.page-title:link {
+  color: black;
+}
+
+.page-title:visited {
+  color: black;
+}
+
+.page-title:hover {
+  color: blue;
+}
+
+.page-title:active {
+  color: blue;
+}
+
+.link:link {
+  color: black;
+}
+
+.link:visited {
+  color: black;
+}
+
+.link:hover {
+  color: blue;
+}
+
+.link:active {
+  color: blue;
+}
+
+#session-button {
+  float: right;
+  padding: 1.6rem;
+}
