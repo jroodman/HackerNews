@@ -1,0 +1,7 @@
+<h1>Login</h1>
+
+<%= form_for :session, url: login_path, method: :post, html: {class: "login_form"} do |f| %>
+  <%= f.label(:username) %>: <%= f.text_field :username %> </p>
+  <%= f.label(:password) %>: <%= f.password_field :password %> </p>
+  <%= f.submit "Login" %>
+<% end %>
