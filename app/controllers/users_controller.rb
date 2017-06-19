@@ -21,15 +21,10 @@ class UsersController < ApplicationController
 
     parameters = remove_empty user_params
 
-    if parameters.empty?
-      @form_empty = "All form fields cannot be empty."
-      render :edit
-      return
-    end
-
-    if @user.update_attributes(parameters)
+    if parameters.any? && @user.update_attributes(parameters)
       redirect_to root_path, notice: 'User successfully edited.'
     else
+      @form_empty = "All form fields cannot be empty." if parameters.empty?
       render :edit
     end
   end
