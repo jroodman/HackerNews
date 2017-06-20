@@ -12,7 +12,7 @@ RSpec.describe "a client attempting to edit their acccount", type: :feature do
   end
 
   before do
-    login_user 'username123', 'password123'
+    login_user User.new(username: 'username123', password: 'password123')
   end
 
   context "with all fields empty" do
