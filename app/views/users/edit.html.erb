@@ -5,11 +5,8 @@
   <% if @form_empty.present? %>
     <li><%=@form_empty%></li>
   <% end %>
-  <% if @user.errors.any? %>
-    <% @user.errors.uniq.each do |error_field| %>
-      <li> <%= "#{ error_field.to_s.humanize } " + @user.errors[error_field].join('; ') %></li>
-    <% end %>
-  <% end %>
+  <%= render partial: 'shared/model_errors', locals: {model: @user} %>
+
 </ul>
 
 <%= form_for @user, html: {class: "edit_user_form"} do |f| %>
