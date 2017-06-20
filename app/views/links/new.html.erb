@@ -1,12 +1,6 @@
 <h1>Submit Link</h1>
 
-<% if @link.errors.any? %>
-  <ul>
-    <% @link.errors.uniq.each do |error_field| %>
-      <li><%= "#{ error_field.to_s.humanize } " + @link.errors[error_field].join('; ') %></li>
-    <% end %>
-  </ul>
-<% end %>
+<%= render partial: 'shared/model_errors', locals: {model: @link} %>
 
 <%= form_for @link, html: {class: "submit_link_form"} do |f| %>
   <p> <%= f.label(:title) %>: <%= f.text_field :title %> </p>

@@ -7,7 +7,8 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect_to root_path, notice: 'User successfully created.'
     else
-      render :new, notice: 'Error: Unable to create user account'
+      flash[:error] = "Error: Unable to create user account"
+      render :new
     end
   end
 

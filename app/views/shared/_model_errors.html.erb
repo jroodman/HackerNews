@@ -1,0 +1,7 @@
+<% if model.errors.any? %>
+  <ul>
+    <% model.errors.uniq.each do |error_field| %>
+      <li><%= "#{ error_field.to_s.humanize } " + model.errors[error_field].join('; ') %></li>
+    <% end %>
+  </ul>
+<% end %>

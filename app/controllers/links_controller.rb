@@ -1,7 +1,7 @@
 class LinksController < ApplicationController
 
   def new
-    if !session[:user_id].present?
+    if !current_user.present?
       redirect_to login_path, notice: 'You must be logged in to submit a link.'
     else
       @link = Link.new
@@ -10,7 +10,7 @@ class LinksController < ApplicationController
 
   def create
     @link = Link.new(link_params)
-    @link.user_id = session[:user_id]
+    @link.user = current_user
 
     if @link.save
       redirect_to root_path, notice: 'Link successfully submitted.'
