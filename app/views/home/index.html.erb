@@ -1,21 +1,80 @@
-<header>
-  <title>HackerNews</title>
-</header>
+<div class="page-header">
+  <%= link_to 'Hacker News', root_path, class: 'page-title' %> |
+  <%= link_to 'new', root_path, class: 'link' %> |
+  <%= link_to 'comments', root_path, class: 'link' %>
 
-<body>
-  <div class="page-header">
-    <%= link_to 'Hacker News', root_path, class: 'page-title' %> |
-    <%= link_to 'new', root_path, class: 'link' %> |
-    <%= link_to 'comments', root_path, class: 'link' %>
+  <% if current_user.present? %>
+    | <%= link_to 'submit', new_link_path, class: 'link' %>
+    <%= link_to 'edit account', edit_user_path(current_user), class: 'link right-header' %>
+    <span class="right-header"> | </span>
+    <%= link_to 'logout', logout_path, method: :delete, class: 'link right-header' %>
+  <% else %>
+    <%= link_to 'login', login_path, class: 'link right-header' %>
+  <% end %>
+</div>
 
-    <% if current_user.present? %>
-      | <%= link_to 'submit', new_link_path, class: 'link' %>
-      <%= link_to 'edit account', edit_user_path(current_user), class: 'link right-header' %>
-      <span class="right-header"> | </span>
-      <%= link_to 'logout', logout_path, method: :delete, class: 'link right-header' %>
-    <% else %>
-      <%= link_to 'login', login_path, class: 'link right-header' %>
+<ul class="list-group">
+
+  <% if @links.present? %>
+  <% @display_counter = 0 %>
+    <% @links.each do |link| %>
+      <% @display_counter += 1 %>
+
+      <li class="list-group-item" id="link-<%= "#{link.id}" %>">
+        <table>
+          <tr>
+            <td class="rank"><%= "#{@display_counter}" %></td>
+
+            <td>
+            <!-- If user is not logged in, cannot vote -->
+            <% if current_user.present? %>
+              <!-- Check if user has already voted -->
+              <% voteLookup = HackerNews::VoteLookupService.new(current_user, link) %>
+              <% if voteLookup.vote.present? %>
+                <%= link_to vote_path(voteLookup.vote.id), method: :delete, class: 'down-vote-link' do %>
+                  <span class="glyphicon glyphicon-chevron-up"></span>
+                <% end %>
+              <% else %>
+                <%= link_to votes_path(votable_id: link.id, votable_type: link.class.to_s), method: :post, class: 'up-vote-link' do %>
+                  <span class="glyphicon glyphicon-chevron-up"></span>
+                <% end %>
+              <% end %>
+            <% else %>
+              <span class="glyphicon glyphicon-chevron-up" id="false-link"></span>
+            <% end %>
+           </td>
+
+           <th class="article-header">
+             <a href="#"><%= "#{link.title}" %></a>
+             <a href="#" style="font-size: 1.2rem">(<%= "#{link.url}" %>)</a>
+           </th>
+         </tr>
+         <tr style="font-size: 1rem">
+           <td>&nbsp;</td>
+           <td>&nbsp;</td>
+           <td class="article-footer">
+             <span class="points">points <%= "#{link.votes_count}" %></span>
+             <span class="author">by <%= "#{link.user.username}" %></span>
+             <span class="post-time"><%= time_ago_in_words link.created_at %></span>
+             <span class="comments-link">|
+               <%= link_to "#{link.comment_count} comments", root_path %>
+             </span>
+           </td>
+          </tr>
+        </table>
+      </li>
+
     <% end %>
-  </div>
+  <% end %>
 
-</body>
+</ul>
+
+<p class="pagination"><%= paginate @links %></p>
+
+<!-- Popup tries to vote and is not logged in -->
+<script>
+  function showPopup() {
+    var popup = document.getElementById("popup");
+    popup.classList.toggle("show");
+  }
+</script>

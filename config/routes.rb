@@ -8,5 +8,6 @@ Rails.application.routes.draw do
 
   resources :users, only: [:new, :create, :edit, :update]
   resources :links, only: [:new, :create]
-  
+  resources :votes, only: [:create, :destroy]
+
 end

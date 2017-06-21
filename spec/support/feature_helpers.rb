@@ -1,7 +1,7 @@
 module FeatureHelpers
 
   def login_user(user = nil)
-    user ||= User.create(username: 'test', password: 'test')
+    user ||= User.create(username: 'username123', password: 'password123')
 
     visit login_path
 
