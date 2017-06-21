@@ -2,7 +2,6 @@
 
 <%= render partial: 'shared/model_errors', locals: {model: @user} %>
 
-
 <%= form_for @user, html: {class: "create_user_form"} do |f| %>
   <p> <%= f.label(:username) %>: <%= f.text_field :username %> </p>
   <p> <%= f.label(:email) %>: <%= f.email_field :email %> </p>

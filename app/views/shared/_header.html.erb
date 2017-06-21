@@ -1,0 +1,14 @@
+<div class="page-header">
+  <%= link_to 'Hacker News', root_path, class: 'page-title' %> |
+  <%= link_to 'new', root_path, class: 'link' %> |
+  <%= link_to 'comments', root_path, class: 'link' %>
+
+  <% if current_user.present? %>
+    | <%= link_to 'submit', new_link_path, class: 'link' %>
+    <%= link_to 'edit account', edit_user_path(current_user), class: 'link right-header' %>
+    <span class="right-header"> | </span>
+    <%= link_to 'logout', logout_path, method: :delete, class: 'link right-header' %>
+  <% else %>
+    <%= link_to 'login', login_path, class: 'link right-header' %>
+  <% end %>
+</div>
