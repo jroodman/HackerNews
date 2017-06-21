@@ -1,0 +1,14 @@
+<%= render partial: 'shared/header' %>
+
+<%= form_for @comment, html: {class: "create_comment_form"} do |f| %>
+  <p> <%= f.label(:text) %>: <%= f.text_area :text %> </p>
+  <%= f.hidden_field :user_id, current_user %>
+  <%= hidden_field_tag :link_id, @link.id %>
+  <%= f.submit "Post Comment" %>
+<% end %>
+
+<div class="container">
+  <%= @comments.each do %>
+
+
+</div>
