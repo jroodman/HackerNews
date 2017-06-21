@@ -4,6 +4,7 @@ class User < ApplicationRecord
 
     has_many :links
     has_many :comments
+    has_many :votes
 
     validates :username, :email, presence: true, uniqueness: true
     validates :password, length: { in: 8..256 }, if: :password

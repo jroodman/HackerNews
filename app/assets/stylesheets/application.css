@@ -48,3 +48,8 @@
   padding-top: 1.6rem;
   padding-right: .4rem;
 }
+
+.pagination {
+  padding-right: 2rem;
+  font-size: 1.4rem;
+}
