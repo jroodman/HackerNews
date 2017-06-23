@@ -18,6 +18,8 @@ class SessionController < ApplicationController
     redirect_to root_path, notice: 'You are now logged out.'
   end
 
+  private
+
   def session_params
     params.require(:session).permit(
       :username,

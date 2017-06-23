@@ -9,7 +9,8 @@ RSpec.describe HackerNews::VoteLookupService do
         username: "username123",
         email: "email@test.com",
         password: "password123",
-        password_confirmation: "password123")
+        password_confirmation: "password123"
+      )
     end
 
     let!(:link) do
@@ -30,7 +31,7 @@ RSpec.describe HackerNews::VoteLookupService do
         )
       end
 
-      subject { HackerNews::VoteLookupService.new(user, votable) }
+      subject { HackerNews::VoteLookupService.new(user: user, votable: votable) }
 
       context "and there is no existing vote between the two" do
 
@@ -61,7 +62,7 @@ RSpec.describe HackerNews::VoteLookupService do
 
       let!(:votable) { link }
 
-      subject { HackerNews::VoteLookupService.new user, votable }
+      subject { HackerNews::VoteLookupService.new user: user, votable: votable }
 
       context "and there is no existing vote between the two" do
 
@@ -86,6 +87,55 @@ RSpec.describe HackerNews::VoteLookupService do
 
       end
 
+    end
+
+  end
+
+  describe "#links" do
+
+    let!(:user) do
+      User.create(
+        username: "username123",
+        email: "email@test.com",
+        password: "password123",
+        password_confirmation: "password123"
+      )
+    end
+
+    let!(:votable1) do
+      Link.create(
+        title: 'Test Link1',
+        url: 'http://www.testlink1.com/',
+        user: user
+      )
+    end
+
+    let!(:votable2) do
+      Link.create(
+        title: 'Test Link2',
+        url: 'http://www.testlink2.com/',
+        user: user
+      )
+    end
+
+    let!(:vote1) do
+      Vote.create(
+        user_id: user.id,
+        votable: votable1
+      )
+    end
+
+    let!(:vote2) do
+      Vote.create(
+        user_id: user.id,
+        votable: votable2
+      )
+    end
+
+    subject { HackerNews::VoteLookupService.new(user: user) }
+
+    it "returns all the links the given user has voted on" do
+      expect(subject.links).to eq [votable1, votable2]
     end
 
   end

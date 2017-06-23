@@ -13,7 +13,7 @@ RSpec.describe "a client viewing the home page", type: :feature do
 
   let!(:link) do
     Link.create(
-      title: 'Test Link',
+      title: 'Test Link1',
       url: 'http://www.testlink.com/',
       user: user
     )
@@ -31,8 +31,8 @@ RSpec.describe "a client viewing the home page", type: :feature do
 
     it "should see links visible on the page" do
       visit root_path
-      expect(page.find("#link-#{link.id}").present?).to eq true
-      expect(page.find("#link-#{link2.id}").present?).to eq true
+      expect(page).to have_content 'Test Link1'
+      expect(page).to have_content 'Test Link2'
     end
 
   end
