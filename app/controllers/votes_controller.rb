@@ -1,16 +1,25 @@
 class VotesController < ApplicationController
 
   def create
-    current_user.votes.create(votable_type: vote_params[0], votable_id: vote_params[1])
+    votable_type, votable_id = vote_params
+    HackerNews::VoteLookupService.new(
+      user: current_user,
+      votable_id: votable_id,
+      votable_type: votable_type
+    ).create_vote
 
     redirect_back(fallback_location: root_path)
   end
 
   def destroy
-    current_user.votes.find_by(id: params[:id]).try(:destroy)
+    HackerNews::VoteLookupService.new(
+      user: current_user
+    ).delete_vote params[:id]
 
     redirect_back(fallback_location: root_path)
   end
+
+  private
 
   def vote_params
     params.require([:votable_type, :votable_id])

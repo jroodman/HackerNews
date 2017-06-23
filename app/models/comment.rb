@@ -12,34 +12,24 @@ class Comment < ApplicationRecord
   validates :link_id, presence: true, unless: :parent_comment_id
   validates :parent_comment_id, presence: true, unless: :link_id
 
-  after_create :increment_comment_count
-  after_destroy :decrement_comment_count
+  after_create :modify_comment_count
+  after_destroy :modify_comment_count
 
   def to_s
     text
   end
 
-  def increment_comment_count
-    if link.present?
-      link.update_attributes(comment_count: link.comment_count + 1)
-    else
-      current = parent
-      while !current.link.present? do
-        current = current.parent
-      end
-      current.link.update_attributes(comment_count: current.link.comment_count + 1)
-    end
-  end
+  def modify_comment_count
+    val = destroyed? ? -1 : 1
 
-  def decrement_comment_count
     if link.present?
-      link.update_attributes(comment_count: link.comment_count - 1)
+      link.update_attributes(comment_count: link.comment_count + val)
     else
       current = parent
       while !current.link.present? do
         current = current.parent
       end
-      current.link.update_attributes(comment_count: current.link.comment_count - 1)
+      current.link.update_attributes(comment_count: current.link.comment_count + val)
     end
   end
 

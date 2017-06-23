@@ -4,6 +4,8 @@ class HomeController < ApplicationController
     @links = Link.page(page).per(20)
   end
 
+  private
+
   def page
     @page ||= index_params[:page] || 1
   end

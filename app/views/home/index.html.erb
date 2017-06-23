@@ -16,20 +16,18 @@
 <ul class="list-group">
 
   <% if @links.present? %>
-  <% @display_counter = 0 %>
-    <% @links.each do |link| %>
-      <% @display_counter += 1 %>
+    <% @links.each_with_index do |link, index| %>
 
       <li class="list-group-item" id="link-<%= "#{link.id}" %>">
         <table>
           <tr>
-            <td class="rank"><%= "#{@display_counter}" %></td>
+            <td class="rank"><%= "#{index}" %></td>
 
             <td>
             <!-- If user is not logged in, cannot vote -->
             <% if current_user.present? %>
               <!-- Check if user has already voted -->
-              <% voteLookup = HackerNews::VoteLookupService.new(current_user, link) %>
+              <% voteLookup = HackerNews::VoteLookupService.new(user: current_user, votable: link) %>
               <% if voteLookup.vote.present? %>
                 <%= link_to vote_path(voteLookup.vote.id), method: :delete, class: 'down-vote-link' do %>
                   <span class="glyphicon glyphicon-chevron-up"></span>
