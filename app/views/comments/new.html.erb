@@ -1,0 +1,27 @@
+<%= render partial: 'shared/header' %>
+
+<div class="bucket">
+  <table>
+    <tr>
+     <th class="comment-username">
+       <span><%= "#{current_user.username}" %></span>
+       <span class="comment-post-time"><%= time_ago_in_words(@comment.created_at) + " ago"%></span>
+     </th>
+   </tr>
+   <tr>
+     <!-- <td>&nbsp;</td> -->
+     <td class="comment-text">
+       <span class="comment-link">
+         <%= @comment.text %>
+       </span>
+     </td>
+    </tr>
+    <tr style="font-size: 1.3rem">
+      <!-- <td>&nbsp;</td> -->
+      <td>
+        <%= "#{@comment.votes_count} points" %></td>
+    </tr>
+  </table>
+
+  <p><%= render partial: 'shared/comment_form', locals: { submit_path: create_child_comment_path(@comment) } %></p>
+</div>
