@@ -24,9 +24,7 @@
             <td class="rank"><%= "#{index}" %></td>
 
             <td>
-            <!-- If user is not logged in, cannot vote -->
             <% if current_user.present? %>
-              <!-- Check if user has already voted -->
               <% voteLookup = HackerNews::VoteLookupService.new(user: current_user, votable: link) %>
               <% if voteLookup.vote.present? %>
                 <%= link_to vote_path(voteLookup.vote.id), method: :delete, class: 'down-vote-link' do %>
@@ -55,7 +53,7 @@
              <span class="author">by <%= "#{link.user.username}" %></span>
              <span class="post-time"><%= time_ago_in_words link.created_at %></span>
              <span class="comments-link">|
-               <%= link_to "#{link.comment_count} comments", root_path %>
+               <%= link_to "#{link.comment_count} comments", comments_path(link_id: link.id) %>
              </span>
            </td>
           </tr>

@@ -1,16 +1,29 @@
 class CommentsController < ApplicationController
 
   def index
-    @link = Link.find(params[:link_id])
+    @link = Link.find(index_param)
+    @new_comment = Comment.new
     @comments = @link.comments
   end
 
   def new
-    @comment = Comment.new
+    @comment = Comment.find(new_comment_param)
+    @new_comment = Comment.new
   end
 
-  def create
-    if current_user.comment.create(new_comment_params)
+  def create_link_comment
+    comment = current_user.comments.create(create_comment_params.merge(link_id: params[:id]))
+    if comment.present?
+      redirect_to root_path, notice: 'Comment successfully created.'
+    else
+      flash[:error] = "Error: Unable to create comment"
+      render :new
+    end
+  end
+
+  def create_child
+    comment = current_user.comments.create(create_comment_params.merge(parent_comment_id: params[:id]))
+    if comment.present?
       redirect_to root_path, notice: 'Comment successfully created.'
     else
       flash[:error] = "Error: Unable to create comment"
@@ -30,12 +43,16 @@ class CommentsController < ApplicationController
 
   private
 
-  def index_comment_params
+  def index_param
     params.require(:link_id)
   end
 
-  def new_comment_params
-    params.require(:comment).allow(:text, :user_id, :link_id, :parent_comment_id)
+  def new_comment_param
+    params.require(:comment_id)
+  end
+
+  def create_comment_params
+    params.require(:comment).permit(:text)
   end
 
 end

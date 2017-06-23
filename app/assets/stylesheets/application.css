@@ -54,6 +54,12 @@
   font-size: 1.4rem;
 }
 
-.container {
-  padding: 1rem;
+.bucket {
+  padding: 2rem;
+}
+
+.comment-bucket {
+  padding-left: 4rem;
+  padding-top: 1.5rem;
+  padding-bottom: 0rem;
 }

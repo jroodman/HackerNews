@@ -1,0 +1,4 @@
+<%= form_for @new_comment, url: submit_path, html: {class: "create_comment_form"} do |f| %>
+  <p> <%= f.label(:text) %>: <%= f.text_area :text %> </p>
+  <%= f.submit "Post Comment" %>
+<% end %>

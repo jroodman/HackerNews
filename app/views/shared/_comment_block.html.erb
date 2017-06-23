@@ -1,0 +1,46 @@
+<div class="comment-bucket">
+
+  <table>
+    <tr>
+      <td>
+      <% if current_user.present? %>
+        <% voteLookup = HackerNews::VoteLookupService.new(user: current_user, votable: comment) %>
+        <% if voteLookup.vote.present? %>
+          <%= link_to vote_path(voteLookup.vote.id), method: :delete, class: 'down-vote-link' do %>
+            <span class="glyphicon glyphicon-chevron-up"></span>
+          <% end %>
+        <% else %>
+          <%= link_to votes_path(votable_id: comment.id, votable_type: comment.class.to_s), method: :post, class: 'up-vote-link' do %>
+            <span class="glyphicon glyphicon-chevron-up"></span>
+          <% end %>
+        <% end %>
+      <% else %>
+        <span class="glyphicon glyphicon-chevron-up" id="false-link"></span>
+      <% end %>
+     </td>
+     <th class="comment-username">
+       <span><%= "#{current_user.username}" %></span>
+       <span class="comment-post-time"><%= time_ago_in_words(comment.created_at) + " ago"%></span>
+     </th>
+   </tr>
+   <tr>
+     <td>&nbsp;</td>
+     <td class="comment-text">
+       <span class="comment-link">
+         <%= comment.text %>
+       </span>
+     </td>
+    </tr>
+    <tr style="font-size: 1.3rem">
+      <td>&nbsp;</td>
+      <td>
+        <%= link_to 'reply', new_comment_path(comment_id: comment) %> |
+        <%= "#{comment.votes_count} points" %></td>
+    </tr>
+  </table>
+
+  <% comment.children.each do |child| %>
+    <%= render partial: 'shared/comment_block', locals: { comment: child } %>
+  <% end %>
+
+</div>
