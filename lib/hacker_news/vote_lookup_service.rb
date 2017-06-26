@@ -13,16 +13,16 @@ module HackerNews
 
     def create_vote
       if vote.nil? && votable
-        @user.votes.create(votable_type: @votable.class.to_s, votable_id: @votable.id)
+        user.votes.create(votable_type: votable.class.to_s, votable_id: votable.id)
       end
     end
 
     def delete_vote(id)
-      @user.votes.find_by(id: id).try(:destroy)
+      user.votes.find_by(id: id).try(:destroy)
     end
 
     def links
-      links = @user.votes.map(&:votable).select { |votable| votable.is_a?(Link) }
+      links = user.votes.map(&:votable).select { |votable| votable.is_a?(Link) }
     end
 
   end

@@ -32,5 +32,5 @@ class Comment < ApplicationRecord
       current.link.update_attributes(comment_count: current.link.comment_count + val)
     end
   end
-
+    
 end
