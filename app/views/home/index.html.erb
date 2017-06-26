@@ -1,7 +1,7 @@
 <div class="page-header">
   <%= link_to 'Hacker News', root_path, class: 'page-title' %> |
-  <%= link_to 'new', root_path, class: 'link' %> |
-  <%= link_to 'comments', root_path, class: 'link' %>
+  <%= link_to 'new', root_path(sort: 'new'), class: 'link' %>
+  <!-- <%= link_to 'comments', root_path, class: 'link' %> -->
 
   <% if current_user.present? %>
     | <%= link_to 'submit', new_link_path, class: 'link' %>
@@ -41,8 +41,8 @@
            </td>
 
            <th class="article-header">
-             <a href="#"><%= "#{link.title}" %></a>
-             <a href="#" style="font-size: 1.2rem">(<%= "#{link.url}" %>)</a>
+             <a href="<%= "#{link.url}" %>"><%= "#{link.title}" %></a>
+             <a href="<%= "#{link.url}" %>" style="font-size: 1.2rem">(<%= "#{link.url}" %>)</a>
            </th>
          </tr>
          <tr style="font-size: 1rem">
