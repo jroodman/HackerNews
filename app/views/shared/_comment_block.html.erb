@@ -1,4 +1,4 @@
-<div class="comment-bucket">
+<div class="comment-bucket" id='comment-<%= "#{comment.id}" %>' >
 
   <table>
     <tr>
@@ -19,7 +19,7 @@
       <% end %>
      </td>
      <th class="comment-username">
-       <span><%= "#{current_user.username}" %></span>
+       <span><%= "#{comment.user.username}" %></span>
        <span class="comment-post-time"><%= time_ago_in_words(comment.created_at) + " ago"%></span>
      </th>
    </tr>
@@ -34,7 +34,9 @@
     <tr style="font-size: 1.3rem">
       <td>&nbsp;</td>
       <td>
-        <%= link_to 'reply', new_comment_path(comment_id: comment) %> |
+        <% if current_user.present? %>
+          <%= link_to 'reply |', new_comment_path(comment_id: comment) %>
+        <% end %>
         <%= "#{comment.votes_count} points" %></td>
     </tr>
   </table>
