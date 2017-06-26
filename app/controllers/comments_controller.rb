@@ -13,21 +13,21 @@ class CommentsController < ApplicationController
 
   def create_link_comment
     comment = current_user.comments.create(create_comment_params.merge(link_id: params[:id]))
-    if comment.present?
+    if comment.persisted?
       redirect_to root_path, notice: 'Comment successfully created.'
     else
       flash[:error] = "Error: Unable to create comment"
-      render :new
+      redirect_back(fallback_location: root_path)
     end
   end
 
   def create_child
     comment = current_user.comments.create(create_comment_params.merge(parent_comment_id: params[:id]))
-    if comment.present?
+    if comment.persisted?
       redirect_to root_path, notice: 'Comment successfully created.'
     else
       flash[:error] = "Error: Unable to create comment"
-      render :new
+      redirect_back(fallback_location: root_path)
     end
   end
 

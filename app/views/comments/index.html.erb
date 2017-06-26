@@ -1,7 +1,9 @@
 <%= render partial: 'shared/header' %>
 
 <div class="bucket">
-  <%= render partial: 'shared/comment_form', locals: { submit_path: create_comment_for_link_path(@link) } %>
+  <% if @current_user.present? %>
+    <%= render partial: 'shared/comment_form', locals: { submit_path: create_comment_for_link_path(@link) } %>
+  <% end %>
 
   <% @comments.each do |comment| %>
     <%= render partial: 'shared/comment_block', locals: { comment: comment } %>
