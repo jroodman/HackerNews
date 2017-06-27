@@ -19,7 +19,7 @@
       <% end %>
      </td>
      <th class="comment-username">
-       <span><%= "#{comment.user.username}" %></span>
+       <span><%= comment.user %></span>
        <span class="comment-post-time"><%= time_ago_in_words(comment.created_at) + " ago"%></span>
      </th>
    </tr>
