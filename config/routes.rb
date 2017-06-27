@@ -6,9 +6,6 @@ Rails.application.routes.draw do
   post '/login', to: 'session#create'
   delete '/logout', to: 'session#destroy'
 
-  post '/links/:id/comment', to: 'comments#create_link_comment'
-  post '/comments/:id/comment', to: 'comments#create_comment_comment'
-
   resources :users, only: [:new, :create, :edit, :update]
   resources :links, only: [:new, :create] do
     member do
